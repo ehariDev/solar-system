@@ -13,11 +13,8 @@ jobs:
     unit-testing:
         strategy:
           matrix:
-            node-version: [18, 19, 20]
-            os: [ubuntu-latest, ubuntu-22.04, ubuntu-20.04]
-            exclude:
-              - node-version: 18
-                os: ubuntu-latest
+            node-version: [20]
+            os: [ubuntu-latest]
         runs-on: ${{ matrix.os }}
         steps:
             - name: Checkout Repo
@@ -38,3 +35,26 @@ jobs:
               with:
                 name: Mocha-Test-Result-${{ matrix.node-version}}-${{ matrix.os }}
                 path: test-results.xml
+    
+    code-coverage:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+    
+            - name: Setup NodeJS version - 20
+              uses: actions/setup-node@v3
+              with:
+                node-version: 20
+            
+            - name: Install Dependencies and Run code coverage
+              run: |
+                  npm install
+                  npm run coverage
+    
+            - name: Archive Test Result
+              uses: actions/upload-artifact@v3
+              with:
+                name: Code-Coverage-Result
+                path: coverage
+                retention-days: 5

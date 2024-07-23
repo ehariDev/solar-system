@@ -11,15 +11,22 @@ env:
 
 jobs:
     unit-testing:
-        runs-on: ubuntu-latest
+        strategy:
+          matrix:
+            node-version: [18, 19, 20]
+            os: [ubuntu-latest, ubuntu-22.04, ubuntu-20.04]
+            exclude:
+              - node-version: 18
+                os: ubuntu-latest
+        runs-on: ${{ matrix.os }}
         steps:
             - name: Checkout Repo
               uses: actions/checkout@v4
             
-            - name: Install NodeJS
+            - name: Install NodeJS ${{ matrix.node-version }} on ${{ matrix.os }}
               uses: actions/setup-node@v3
               with:
-                node-version: 20
+                node-version: ${{ matrix.node-version }}
 
             - name: Install Dependencies and Run Unit Tests
               run: |

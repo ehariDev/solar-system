@@ -93,4 +93,4 @@ jobs:
               push: true
               tags: |
                 ${{ github.repository_owner }}/solar:${{ github.sha }}
-                ghcr.io/${{ github.repository_owner }}/solar:${{ github.sha }}
+                ghcr.io/solar:${{ github.sha }}

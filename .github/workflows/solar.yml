@@ -95,3 +95,21 @@ jobs:
               push: true
               tags: |
                 ghcr.io/eharidev/solar-system:${{ github.sha }}
+    
+    dev-deploy:
+      needs: docker
+      name: dev
+      runs-on: ubuntu-latest
+      steps:
+        - name: Repo Checkout
+          uses: actions/checkout@v4
+
+        - name: Install Kubectl
+          uses: actions/setup-kubectl@v3
+          with:
+            version: 'v1.26.0'
+        
+        - name: Get Cluster Details
+          run: |
+            kubectl version
+            kubectl get nodes

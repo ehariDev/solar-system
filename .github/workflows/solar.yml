@@ -17,15 +17,6 @@ jobs:
             os: [ubuntu-latest]
         runs-on: ${{ matrix.os }}
         name: Unit-Testing
-        services:
-          mongodb:
-            image: mongo-express
-            ports:
-              - 27017:27017
-        env:
-          MONGO_URI: 'mongodb://localhost:27017/superData'
-          MONGO_USERNAME: non-prod-user
-          MONGO_PASSWORD: non-prod-password
         steps:
             - name: Checkout Repo
               uses: actions/checkout@v4
@@ -50,15 +41,17 @@ jobs:
     
     code-coverage:
         name: Code-Coverage
+        container: 
+          image: node:20
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Repository
               uses: actions/checkout@v4
     
-            - name: Setup NodeJS version - 20
-              uses: actions/setup-node@v3
-              with:
-                node-version: 20
+            # - name: Setup NodeJS version - 20
+            #   uses: actions/setup-node@v3
+            #   with:
+            #     node-version: 20
             
             - name: Install Dependencies and Run code coverage
               run: |

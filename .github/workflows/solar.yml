@@ -19,7 +19,7 @@ jobs:
         name: Unit-Testing
         services:
           mongodb:
-            image: 
+            image: mongo-express
             ports:
               - 27017:27017
         env:

@@ -1,4 +1,4 @@
-name: Solar System Unit Tests
+name: Env Variables
 
 on:
     workflow_dispatch: 

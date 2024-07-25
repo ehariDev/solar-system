@@ -12,11 +12,25 @@ env:
 jobs:
     unit-testing:
         runs-on: ubuntu-latest
+        outputs:
+            value1: ${{ steps.step1.outputs.var1 }}
         steps:
             - name: Set Environment Variable
-              run: echo "var1=Bokkale" >> "$GITHUB_ENV"
+              id: step1
+              run: |
+                echo "var1=Bokkale" >> "$GITHUB_ENV"
+                echo "var1=Bokkale" >> "$GITHUB_OUTPUT"
             
             - name: Print Environment Variable
               run: |
                 echo $var1
                 echo ${{ env.var1 }}
+    get-value:
+        runs-on: ubuntu-latest
+        needs: unit-testing
+        env:
+          var1: ${{ needs.unit-testing.outputs.value1 }}
+        steps:
+            - name: Print Environment Var
+              run: echo "Hello $var1"
+            

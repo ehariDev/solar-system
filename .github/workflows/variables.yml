@@ -28,6 +28,8 @@ jobs:
     get-value:
         runs-on: ubuntu-latest
         needs: unit-testing
+        environment: 
+            name: DEV
         env:
           var1: ${{ needs.unit-testing.outputs.value1 }}
         steps:

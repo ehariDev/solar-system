@@ -1,0 +1,22 @@
+name: Solar System Unit Tests
+
+on:
+    workflow_dispatch: 
+    push: 
+
+env:  
+    MONGO_URI: 'mongodb+srv://supercluster.d83jj.mongodb.net/superData'
+    MONGO_USERNAME: ${{ vars.MONGO_USERNAME }}
+    MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }} 
+
+jobs:
+    unit-testing:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Set Environment Variable
+              run: echo "var1=Bokkale" >> "$GITHUB_ENV"
+            
+            - name: Print Environment Variable
+              run: |
+                echo $var1
+                echo ${{ env.var1 }}
